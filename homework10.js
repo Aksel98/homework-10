@@ -41,6 +41,16 @@ class Book {
         this._title = val
     }
 
+    get author() {
+        return this._author
+    }
+
+    set author(val) {
+        if (val instanceof Author) {
+            this._author = val
+        }
+    }
+
     getProfit() {
         console.log(this.price * this.quantity)
     }
@@ -135,8 +145,14 @@ class Student extends Person {
     }
 
     set program(args) {
-        if (!Array.isArray(args)) {
-            console.log('program must be array')
+        if (Array.isArray(args)) {
+            args.forEach(el => {
+                if (typeof el !== "string") {
+                    console.log('program must have only string values')
+                }
+            })
+        } else {
+            console.log('program type must be array')
         }
         this._program = args
     }
@@ -157,14 +173,12 @@ class Teacher extends Person {
         return this._program
     }
 
-    set program(args) {
-        if (!Array.isArray(args)) {
-            console.log('program must be array')
+    set program(letter) {
+        if (typeof letter !== "string") {
+            console.log('program type must be string')
         }
-        this._program = args
+        this._program = letter
     }
 }
 
-let lecturer = new Teacher(['asd', 'zxc'], 1000)
-
-console.log(lecturer.program)
+let lecturer = new Teacher('asd', 1000)
