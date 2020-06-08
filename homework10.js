@@ -180,5 +180,3 @@ class Teacher extends Person {
         this._program = letter
     }
 }
-
-let lecturer = new Teacher('asd', 1000)
