@@ -133,11 +133,12 @@ class Person {
 }
 
 class Student extends Person {
-    constructor(program, year, fee) {
+    constructor(program, year, fee, data) {
         super(Person);
-        this.program = program;
+        this.program = program ? program : [];
         this.year = year;
         this.fee = fee;
+        this.data = data ? data : {};
     }
 
     get program() {
@@ -157,10 +158,38 @@ class Student extends Person {
         this._program = args
     }
 
+    get data() {
+        return this._data
+    }
+
+    set data(v) {
+        if (typeof v === "object") {
+            this._data = v
+            this.program.forEach(el => this._data[el] = 0)
+        } else {
+            throw 'The type of data must be object'
+        }
+    }
+
     passExam(program, grade) {
-        return grade >= 50
+        let gradeSum = 0
+        if (this.program.includes(program)) {
+            this.data[program] = grade
+        }
+       gradeSum = Object.values(this.data).reduce((cur, el) => {
+            return el + cur
+        }, 0)
+        if (gradeSum >= 50) {
+            this.year++
+        }
     }
 }
+
+let pupil = new Student(['math', 'phisics', 'motherTongue'], 2, 600000)
+pupil.passExam('math', 20)
+pupil.passExam('phisics', 20)
+pupil.passExam('motherTongue', 20)
+console.log(pupil)
 
 class Teacher extends Person {
     constructor(program, pay) {
