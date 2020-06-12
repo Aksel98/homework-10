@@ -71,16 +71,20 @@ class Account {
         this.balance = balance;
     }
 
+    get getId() {
+        return `${this.id}`;
+    }
+
     get name() {
         return this._name
     }
 
-    get balance() {
-        return this._balance
-    }
-
     set name(val) {
         this._name = val
+    }
+
+    get balance() {
+        return this._balance
     }
 
     set balance(val) {
@@ -110,6 +114,9 @@ class Account {
     }
 }
 
+let a = new Account(1, 'asd', 500)
+console.log(a.getId)
+
 // 3
 class Person {
     constructor(firstName, lastName, gender, age) {
@@ -133,8 +140,8 @@ class Person {
 }
 
 class Student extends Person {
-    constructor(program, year, fee, data) {
-        super(Person);
+    constructor(program, year, fee, data, firstName, lastName, gender, age) {
+        super(firstName, lastName, gender, age);
         this.program = program ? program : [];
         this.year = year;
         this.fee = fee;
